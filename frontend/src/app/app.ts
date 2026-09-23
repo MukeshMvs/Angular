@@ -1,8 +1,8 @@
 import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { DataGrid } from './grid/data-grid/data-grid';
 
 @Component({
-  imports: [RouterOutlet],
+  imports: [DataGrid],
   selector: 'app-root',
   styleUrl: './app.scss',
   templateUrl: './app.html',
