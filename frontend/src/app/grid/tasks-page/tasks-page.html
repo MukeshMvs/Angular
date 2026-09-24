@@ -1,0 +1,7 @@
+<app-data-grid
+  [columns]="columns"
+  [rows]="rows()"
+  [total]="total()"
+  [loading]="loading()"
+  (queryChange)="load($event)"
+/>

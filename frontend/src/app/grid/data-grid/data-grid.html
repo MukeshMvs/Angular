@@ -1,20 +1,41 @@
 <div class="max-w-3xl mx-auto mt-8">
+  <input
+    type="search"
+    placeholder="Search"
+    class="border border-gray-300 rounded px-3 py-1.5 mb-3 w-64"
+    (input)="onSearch($any($event.target).value)"
+  />
+
   <table class="w-full border border-gray-200 rounded-lg overflow-hidden text-sm">
     <thead class="bg-gray-100">
       <tr>
-        @for (col of columns; track col.field) {
-          <th class="text-left px-4 py-2 font-semibold text-gray-700">{{ col.header }}</th>
+        @for (col of columns(); track col.field) {
+          <th class="text-left px-4 py-2 font-semibold text-gray-700 cursor-pointer select-none" (click)="toggleSort(col.field)">{{ col.header }}{{ sortIcon(col.field) }}</th>
         }
       </tr>
     </thead>
     <tbody>
-      @for (row of rows(); track row.id) {
+      @for (row of rows(); track row['id']) {
         <tr class="border-t border-gray-200 hover:bg-gray-50">
-          @for (col of columns; track col.field) {
+          @for (col of columns(); track col.field) {
             <td class="px-4 py-2 text-gray-800">{{ row[col.field] }}</td>
           }
         </tr>
+      } @empty {
+        <tr><td class="px-4 py-6 text-center text-gray-500" [attr.colspan]="columns().length">
+          {{ loading() ? 'Loading…' : 'No records found.' }}
+        </td></tr>
       }
     </tbody>
   </table>
+
+  <div class="flex justify-between items-center mt-3 text-sm">
+    <span>Page {{ page }} of {{ totalPages() }} ({{ total() }} total)</span>
+    <div class="flex gap-2">
+      <button class="px-3 py-1 border rounded disabled:opacity-40"
+        [disabled]="page <= 1" (click)="goTo(page - 1)">Previous</button>
+      <button class="px-3 py-1 border rounded disabled:opacity-40"
+        [disabled]="page >= totalPages()" (click)="goTo(page + 1)">Next</button>
+    </div>
+  </div>
 </div>
