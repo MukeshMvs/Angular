@@ -1,5 +1,6 @@
 import { Component, input, output } from '@angular/core';
 import { GridColumn, GridQuery, GridRow, SortDir  } from '../grid-models';
+import { CommonModule } from '@angular/common';
 
 interface DataGridRow extends Record<string, string | number> {
   id: number;
@@ -8,7 +9,7 @@ interface DataGridRow extends Record<string, string | number> {
 }
 
 @Component({
-  imports: [],
+  imports: [CommonModule],
   selector: 'app-data-grid',
   styleUrl: './data-grid.scss',
   templateUrl: './data-grid.html',
@@ -60,6 +61,10 @@ export class DataGrid {
   sortIcon(field: string): string {
     if (this.sortField !== field) return '';
     return this.sortDir === 'asc' ? ' ▲' : ' ▼';
+  }
+
+  isDateField(field: string): boolean {
+    return field.toLowerCase().includes('date');
   }
 
   private emit() {

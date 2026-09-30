@@ -18,7 +18,13 @@
       @for (row of rows(); track row['id']) {
         <tr class="border-t border-gray-200 hover:bg-gray-50">
           @for (col of columns(); track col.field) {
-            <td class="px-4 py-2 text-gray-800">{{ row[col.field] }}</td>
+            <td class="px-4 py-2 text-gray-800">
+               @if (isDateField(col.field)) {
+                {{ row[col.field] | date:'yyyy-MM-dd' }}
+              } @else {
+                {{ row[col.field] }}
+              }
+            </td>
           }
         </tr>
       } @empty {
